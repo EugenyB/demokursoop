@@ -23,6 +23,7 @@
             <th>Gang</th>
             <th>Crime</th>
             <th>Crime Count</th>
+            <th>Show</th>
             <th><i class="bi bi-pencil"></i></th>
             <th><i class="bi bi-trash"></i></th>
         </tr>
@@ -36,6 +37,9 @@
             <td th:text="${b.gang}"></td>
             <td th:text="${b.crimeType}"></td>
             <td th:text="${b.crimeCount}"></td>
+            <td>
+                <a class="btn btn-sm btn-info" th:href="@{/show(id=${b.id})}" ><i class="bi bi-person"></i></a>
+            </td>
             <td>
                 <a class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#add_bandit"
                    data-bs-ident="#edit"

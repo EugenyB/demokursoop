@@ -13,6 +13,7 @@ import ua.mk.berkut.demokursoop.service.BanditService;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
+import java.util.Optional;
 
 @Controller
 @AllArgsConstructor
@@ -52,7 +53,7 @@ public class MainController {
 //        } else {
 //            bandit = new Bandit(name, nickName, gang, crimeType, crimeCount);
 //        }
-        Bandit bandit = Bandit.builder().name(name).nickName(nickName).gang(gang).crimeCount(crimeCount).crimeType(crimeType).build();
+        Bandit bandit = Bandit.builder().nickName(nickName).name(name).gang(gang).crimeCount(crimeCount).crimeType(crimeType).build();
         if (birthdayStr != null && !birthdayStr.isEmpty()) {
             bandit.setBirthday(LocalDate.parse(birthdayStr, DateTimeFormatter.ISO_DATE));
         }
@@ -92,5 +93,16 @@ public class MainController {
         var list = banditService.findAll().stream().filter(b->b.getCrimeType().equalsIgnoreCase(type)).toList();
         model.addAttribute("bandits", list);
         return "crimes";
+    }
+
+    @GetMapping("/show")
+    public String show(Model model, @RequestParam("id") Integer id) {
+        Optional<Bandit> bandit = banditService.findById(id);
+        if (bandit.isEmpty()) {
+            return "redirect:/";
+        } else {
+            model.addAttribute("b", bandit.get());
+            return "bandit";
+        }
     }
 }
