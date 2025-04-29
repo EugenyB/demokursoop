@@ -28,4 +28,16 @@ public class BanditService {
     public void deleteById(Integer integer) {
         banditRepository.deleteById(integer);
     }
+
+    public void edit(Bandit bandit) {
+        banditRepository.findById(bandit.getId()).ifPresent(b -> {
+            b.setName(bandit.getName());
+            b.setNickName(bandit.getNickName());
+            b.setBirthday(bandit.getBirthday());
+            b.setGang(bandit.getGang());
+            b.setCrimeCount(bandit.getCrimeCount());
+            b.setCrimeType(bandit.getCrimeType());
+            banditRepository.save(b);
+        });
+    }
 }
